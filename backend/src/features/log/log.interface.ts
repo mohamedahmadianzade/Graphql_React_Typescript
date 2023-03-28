@@ -1,5 +1,4 @@
 export default interface ILog {
-    id: number
     user: userForLog
     date: string
     description: string

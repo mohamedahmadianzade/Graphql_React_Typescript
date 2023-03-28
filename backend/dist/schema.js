@@ -20,11 +20,11 @@ type userForLog {
 
 
 type Log {
-  id:Int
   user: userForLog
   date: String!
   description: String!
 }
+
 type Query {
   users: UserResponse
   userByUsername(username: String): UserByUsernameResponse
@@ -35,6 +35,7 @@ type Mutation {
   addUser(user: AddUserInput): AddUserResponse
   deleteAllUsers: DeleteUserResponse
   deleteUser(username:String): DeleteUserResponse
+  deleteAllLogs: DeleteLogResponse
 }
 
 type UserResponse implements ServiceResponse{ 
@@ -62,6 +63,12 @@ type AddUserResponse implements ServiceResponse {
 }
 
 type DeleteUserResponse implements ServiceResponse
+{
+  success: Boolean
+  message: String
+}
+
+type DeleteLogResponse implements ServiceResponse
 {
   success: Boolean
   message: String

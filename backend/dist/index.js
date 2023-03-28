@@ -1,17 +1,22 @@
 import { getToken } from './general.js';
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
-import LogRepository from './repository/log.repository.js';
-import UserRepository from './repository/user.repository.js';
+import LogRepository from './features/log/log.repository.js';
+import UserRepository from './features/user/user.repository.js';
 import resolvers from './resolver.js';
 import typeDefs from './schema.js';
+import InitMongo from './database/initMongo.js';
+import * as dotenv from 'dotenv';
+dotenv.config();
 const server = new ApolloServer({
     typeDefs,
     resolvers,
 });
+// initialize mongo server
+InitMongo();
 const info = await startStandaloneServer(server, {
     listen: {
-        port: 4002,
+        port: parseInt(process.env.PORT),
     },
     context: async ({ req }) => {
         return {
@@ -24,3 +29,4 @@ const info = await startStandaloneServer(server, {
     }
 });
 console.log('Server started ' + JSON.stringify(info));
+console.log("------------------------------------------------");

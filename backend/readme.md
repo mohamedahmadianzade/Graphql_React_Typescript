@@ -1,14 +1,13 @@
 # Getting Started with Create React App
 
-Frontend Project of user management system
+Backend Project of user management system
 
-- Implemented in ReactJs
+- Implemented in ExpressJS
 - Typescript Implementation
-- MaterialUI for UI
-- Tanstack library for data fetching and caching
+- Apollo Graphql server library
 - Using .env for configuration variables
-- Apollo Graphql library for communication with graphql server
--
+- MongoDB as database
+- Moongoos as Typeorm
 
 ### `npm start`
 

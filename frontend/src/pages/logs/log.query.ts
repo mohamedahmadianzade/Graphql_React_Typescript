@@ -5,7 +5,6 @@ query logs {
     success
     message
     data {
-      id
       user {
         name
         username
@@ -17,3 +16,13 @@ query logs {
   }
 }
 `;
+
+
+export const deleteAllLogsQuery = gql`
+mutation Mutation {
+  deleteAllLogs {
+    message
+    success
+  }
+}
+`

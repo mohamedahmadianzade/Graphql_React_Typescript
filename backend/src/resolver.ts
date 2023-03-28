@@ -1,5 +1,4 @@
-import { users, logs } from './dataset.js';
-import IContext from './interface/context.interface.js';
+import IContext from './core/context.interface.js';
 const resolvers = {
   Mutation: {
     addUser: async (_, { user }, context: IContext) => {
@@ -7,7 +6,6 @@ const resolvers = {
       await context.repository.log.addLog({ description: `${user.username} created in database successfully`, user: user.username })
       return result;
     },
-
     deleteAllUsers: async (_, __, context: IContext) => {
       const result = await context.repository.user.deleteAllUser();
       await context.repository.log.addLog({ description: `All users deleted successfully` })
@@ -16,9 +14,12 @@ const resolvers = {
     deleteUser: async (_, { username }, context: IContext) => {
       const result = await context.repository.user.deleteUser(username);
       await context.repository.log.addLog({ description: `${username} deleted successfully`, user: username })
-
       return result;
-    }
+    },
+    deleteAllLogs: async (_, __, context: IContext) => {
+      const result = await context.repository.log.deleteAllLogs();
+      return result;
+    },
 
   },
   Query: {
@@ -36,10 +37,10 @@ const resolvers = {
     }
   },
   Log: {
-    user: (parent) => {
-      const user = users.find(user => user.userId === parent.user);
-      if (user)
-        return user
+    user: async (parent, _, context: IContext) => {
+      const user = await context.repository.user.getUserByName(parent.user)
+      if (user.data)
+        return user.data
 
       return {}
     }

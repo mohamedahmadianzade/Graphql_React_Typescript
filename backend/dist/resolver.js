@@ -1,4 +1,3 @@
-import { users } from './dataset.js';
 const resolvers = {
     Mutation: {
         addUser: async (_, { user }, context) => {
@@ -15,7 +14,11 @@ const resolvers = {
             const result = await context.repository.user.deleteUser(username);
             await context.repository.log.addLog({ description: `${username} deleted successfully`, user: username });
             return result;
-        }
+        },
+        deleteAllLogs: async (_, __, context) => {
+            const result = await context.repository.log.deleteAllLogs();
+            return result;
+        },
     },
     Query: {
         users: async (_, __, context) => {
@@ -32,10 +35,10 @@ const resolvers = {
         }
     },
     Log: {
-        user: (parent) => {
-            const user = users.find(user => user.userId === parent.user);
-            if (user)
-                return user;
+        user: async (parent, _, context) => {
+            const user = await context.repository.user.getUserByName(parent.user);
+            if (user.data)
+                return user.data;
             return {};
         }
     }

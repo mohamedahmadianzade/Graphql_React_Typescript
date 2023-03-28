@@ -1,5 +1,5 @@
-import LogRepository from "../repository/log.repository"
-import UserRepository from "../repository/user.repository"
+import LogRepository from "../features/log/log.repository"
+import UserRepository from "../features/user/user.repository"
 
 export default interface IContext {
     token: String

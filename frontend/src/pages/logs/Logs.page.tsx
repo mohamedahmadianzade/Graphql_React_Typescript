@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import {
   TableContainer,
   Paper,
@@ -8,21 +8,42 @@ import {
   TableCell,
   TableBody,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
-import { getAllLogsQuery } from "./log.query";
+import { deleteAllLogsQuery, getAllLogsQuery } from "./log.query";
 import "./log.css";
+import Button from "@mui/material/Button";
+
 const LogsPage = () => {
-  const { loading, error, data } = useQuery(getAllLogsQuery, {
+  const [loadLogs, { error, data }] = useLazyQuery(getAllLogsQuery, {
     fetchPolicy: "network-only",
   });
-  if (loading) return <p>Loading...</p>;
+
+  const [deleteLogs] = useMutation(deleteAllLogsQuery);
+
+  const handleDeletAll = () => {
+    deleteLogs({
+      onCompleted: (data) => {
+        loadLogs();
+      },
+    });
+  };
+
+  useEffect(() => {
+    loadLogs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   if (error) return <p>Error : {error.message}</p>;
   return (
     <div>
       <h1>Logs</h1>
-      <span className="spanBelowHeader">List all users' logs</span>
+      <div className="header">
+        <span className="spanBelowHeader">List all logs</span>
+        <Button variant="outlined" onClick={handleDeletAll} color="error">
+          Cleaer All logs
+        </Button>
+      </div>
       <TableContainer component={Paper} className="tableContainer">
         <Table sx={{ minWidth: "300px" }} aria-label="simple table">
           <TableHead>
@@ -35,7 +56,7 @@ const LogsPage = () => {
           </TableHead>
           <TableBody>
             {data?.logs.data.map((log: any) => (
-              <TableRow key={log.id}>
+              <TableRow key={log.date}>
                 <TableCell>
                   {log.user?.avatar ? (
                     <img

@@ -54,9 +54,8 @@ const CreateUserModal = ({
           setPassword("");
           setUsername("");
           loadUsers();
+          handleClose();
         }
-
-        handleClose();
       },
     });
   };
