@@ -1,0 +1,13 @@
+.tableContainer {
+  margin-top: 20px;
+}
+
+.spanBelowHeader {
+  color: gray;
+}
+
+.logavatar {
+  border-radius: 50px;
+  width: 35px;
+  height: 35px;
+}

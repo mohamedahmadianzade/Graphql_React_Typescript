@@ -16,11 +16,10 @@ const resolvers = {
     },
     Log: {
         user: (parent) => {
-            const user = users.find(user => user.username === parent.user);
-            return {
-                username: user.username,
-                name: user.name
-            };
+            const user = users.find(user => user.userId === parent.user);
+            if (user)
+                return user;
+            return {};
         }
     }
 };

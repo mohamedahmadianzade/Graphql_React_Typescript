@@ -5,12 +5,16 @@ input AddUserInput {
   password: String
 }
 type User {
+  userId:Int!,
   name: String!
   username: String!
   password: String!
   avatar: String
 }
+
+
 type Log {
+  id:Int
   user: User!
   date: String!
   description: String!

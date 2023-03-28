@@ -1,4 +1,4 @@
-import { getToken } from './general';
+import { getToken } from './general.js';
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import LogRepository from './repository/log.repository.js';
