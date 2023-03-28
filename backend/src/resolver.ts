@@ -1,6 +1,26 @@
 import { users, logs } from './dataset.js';
 import IContext from './interface/context.interface.js';
 const resolvers = {
+  Mutation: {
+    addUser: async (_, { user }, context: IContext) => {
+      const result = await context.repository.user.addUser(user)
+      await context.repository.log.addLog({ description: `${user.username} created in database successfully`, user: user.username })
+      return result;
+    },
+
+    deleteAllUsers: async (_, __, context: IContext) => {
+      const result = await context.repository.user.deleteAllUser();
+      await context.repository.log.addLog({ description: `All users deleted successfully` })
+      return result;
+    },
+    deleteUser: async (_, { username }, context: IContext) => {
+      const result = await context.repository.user.deleteUser(username);
+      await context.repository.log.addLog({ description: `${username} deleted successfully`, user: username })
+
+      return result;
+    }
+
+  },
   Query: {
     users: async (_, __, context: IContext) => {
       const result = await context.repository.user.getAllUsers()

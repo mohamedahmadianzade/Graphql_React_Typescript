@@ -9,10 +9,14 @@ import {
   TableBody,
 } from "@mui/material";
 import React from "react";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
 import { getAllLogsQuery } from "./log.query";
 import "./log.css";
 const LogsPage = () => {
-  const { loading, error, data } = useQuery(getAllLogsQuery);
+  const { loading, error, data } = useQuery(getAllLogsQuery, {
+    fetchPolicy: "network-only",
+  });
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
   return (
@@ -25,7 +29,7 @@ const LogsPage = () => {
             <TableRow>
               <TableCell width={10}></TableCell>
               <TableCell width={50}>user</TableCell>
-              <TableCell>date</TableCell>
+              <TableCell width={150}>date</TableCell>
               <TableCell>description</TableCell>
             </TableRow>
           </TableHead>
@@ -33,13 +37,17 @@ const LogsPage = () => {
             {data?.logs.data.map((log: any) => (
               <TableRow key={log.id}>
                 <TableCell>
-                  <img
-                    src={log.user.avatar}
-                    className="logavatar"
-                    alt="avatar"
-                  />
+                  {log.user?.avatar ? (
+                    <img
+                      src={log.user?.avatar}
+                      className="logavatar"
+                      alt="avatar"
+                    />
+                  ) : (
+                    <AccountCircleIcon sx={{ fontSize: 25 }} />
+                  )}
                 </TableCell>
-                <TableCell>{log.user.username}</TableCell>
+                <TableCell>{log.user?.username}</TableCell>
                 <TableCell component="th" scope="row">
                   {log.date}
                 </TableCell>

@@ -15,6 +15,28 @@ export default class UserRepository extends BaseRepository {
         return this.successResponse({ data, message: "get list of the user" })
     }
 
+    async addUser(user: IUser): Promise<IServiceResponse<IUser>> {
+        const data = { userId: Math.floor(Math.random() * (1000 - 1) + 1), ...user };
+        users.push(data)
+        return this.successResponse({
+            data, message: "create user successfully done!"
+        })
+    }
+
+    async deleteAllUser(): Promise<IServiceResponse<boolean>> {
+        users.length = 0
+        return this.successResponse({ message: "all users successfully deleted", data: true })
+    }
+
+    async deleteUser(username: String): Promise<IServiceResponse<boolean>> {
+        const info = users.filter(user => user.username != username);
+        users.length = 0;
+        info.map((user) => {
+            users.push(user)
+        });
+
+        return this.successResponse({ message: "selected user successfully deleted", data: true })
+    }
 
 
 
