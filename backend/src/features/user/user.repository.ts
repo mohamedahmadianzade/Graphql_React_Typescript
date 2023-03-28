@@ -76,9 +76,7 @@ export default class UserRepository extends BaseRepository {
      */
     async getUserByName(username: string): Promise<IServiceResponse<IUser>> {
         const data = await UserModel.findOne({ username });
-        console.log("=======================");
-        console.log(username);
-        console.log(data);
         return this.successResponse({ data, message: "get user information" })
     }
+
 }

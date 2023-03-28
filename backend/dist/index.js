@@ -1,11 +1,10 @@
-import { getToken } from './general.js';
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import LogRepository from './features/log/log.repository.js';
 import UserRepository from './features/user/user.repository.js';
 import resolvers from './resolver.js';
 import typeDefs from './schema.js';
-import InitMongo from './database/initMongo.js';
+import InitMongo from './core/initMongo.js';
 import * as dotenv from 'dotenv';
 dotenv.config();
 const server = new ApolloServer({
@@ -20,7 +19,6 @@ const info = await startStandaloneServer(server, {
     },
     context: async ({ req }) => {
         return {
-            token: getToken(req),
             repository: {
                 user: new UserRepository(),
                 log: new LogRepository()

@@ -15,6 +15,7 @@ import "./log.css";
 import Button from "@mui/material/Button";
 import { useDispatch } from "react-redux/es/exports";
 import AppSlice from "../../state/slice/app.slice";
+import Alert from "@mui/material/Alert";
 
 const LogsPage = () => {
   const [loadLogs, { error, data }] = useLazyQuery(getAllLogsQuery, {
@@ -48,40 +49,45 @@ const LogsPage = () => {
           Cleaer All logs
         </Button>
       </div>
-      <TableContainer component={Paper} className="tableContainer">
-        <Table sx={{ minWidth: "300px" }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell width={10}></TableCell>
-              <TableCell width={50}>user</TableCell>
-              <TableCell width={150}>date</TableCell>
-              <TableCell>description</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data?.logs.data.map((log: any) => (
-              <TableRow key={log.date}>
-                <TableCell>
-                  {log.user?.avatar ? (
-                    <img
-                      src={log.user?.avatar}
-                      className="logavatar"
-                      alt="avatar"
-                    />
-                  ) : (
-                    <AccountCircleIcon sx={{ fontSize: 25 }} />
-                  )}
-                </TableCell>
-                <TableCell>{log.user?.username}</TableCell>
-                <TableCell component="th" scope="row">
-                  {log.date}
-                </TableCell>
-                <TableCell>{log.description}</TableCell>
+      {data?.logs.data && data?.logs.data.length > 0 && (
+        <TableContainer component={Paper} className="tableContainer">
+          <Table sx={{ minWidth: "300px" }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell width={10}></TableCell>
+                <TableCell width={50}>user</TableCell>
+                <TableCell width={150}>date</TableCell>
+                <TableCell>description</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {data?.logs.data.map((log: any) => (
+                <TableRow key={log.date}>
+                  <TableCell>
+                    {log.user?.avatar ? (
+                      <img
+                        src={log.user?.avatar}
+                        className="logavatar"
+                        alt="avatar"
+                      />
+                    ) : (
+                      <AccountCircleIcon sx={{ fontSize: 25 }} />
+                    )}
+                  </TableCell>
+                  <TableCell>{log.user?.username}</TableCell>
+                  <TableCell component="th" scope="row">
+                    {log.date}
+                  </TableCell>
+                  <TableCell>{log.description}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+      {!(data && data.logs.data.length !== 0) && (
+        <Alert severity="info">There is no log to show in the list</Alert>
+      )}
     </div>
   );
 };
