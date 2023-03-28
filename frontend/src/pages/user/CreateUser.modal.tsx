@@ -5,21 +5,26 @@ import { createUserQuery } from "./user.query";
 import Alert from "@mui/material/Alert";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import AddTaskIcon from "@mui/icons-material/AddTask";
+import { useDispatch } from "react-redux/es/exports";
+import AppSlice from "../../state/slice/app.slice";
 const CreateUserModal = ({
   handleClose,
   open,
   loadUsers,
-  showMessage,
 }: {
   handleClose: any;
   loadUsers: any;
-  showMessage: any;
   open: boolean;
 }) => {
   const [createUserMutation, { loading, error }] = useMutation(createUserQuery);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+
+  const dispatch = useDispatch();
+  const showMessage = (message: string) => {
+    dispatch(AppSlice.actions.showMessage(message));
+  };
 
   const handleCreateUser = () => {
     if (!username) {

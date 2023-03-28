@@ -5,18 +5,21 @@ import reportWebVitals from "./reportWebVitals";
 
 import { ApolloProvider } from "@apollo/client";
 import { RouterProvider } from "react-router-dom";
-
+import { Provider } from "react-redux";
 import router from "./router/router";
 import { client } from "./graphql/client";
+import store from "./state/store";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
-      <RouterProvider router={router} />
-    </ApolloProvider>
+    <Provider store={store}>
+      <ApolloProvider client={client}>
+        <RouterProvider router={router} />
+      </ApolloProvider>
+    </Provider>
   </React.StrictMode>
 );
 

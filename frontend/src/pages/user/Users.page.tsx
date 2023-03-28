@@ -19,20 +19,15 @@ import {
 import Button from "@mui/material/Button";
 import CreateUserModal from "./CreateUser.modal";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import Snackbar from "@mui/material/Snackbar";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Badge from "@mui/material/Badge/Badge";
 
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
+import { useDispatch } from "react-redux/es/exports";
+import AppSlice from "../../state/slice/app.slice";
 
 const UsersPage = () => {
-  const [dialogText, setDialogText] = useState("");
-  const [showDialog, setShowDialog] = useState(false);
-  const showMessage = (message: string) => {
-    setDialogText(message);
-    setShowDialog(true);
-  };
-
+  const dispatch = useDispatch();
   const [loadUsers, { error, data }] = useLazyQuery(getAllUserQuery, {
     fetchPolicy: "network-only",
   });
@@ -45,15 +40,14 @@ const UsersPage = () => {
   const handleClose = () => setOpen(false);
   const handleReload = () => {
     loadUsers();
-    showMessage("All users loaded successfully");
+    dispatch(AppSlice.actions.showMessage("All users loaded successfully"));
   };
 
   const handleDeletAll = () => {
     deleteUsers({
       onCompleted: (data) => {
-        showMessage(data.deleteAllUsers.message);
+        dispatch(AppSlice.actions.showMessage(data.deleteAllUsers.message));
         loadUsers();
-        showMessage("All users deleted successfully");
       },
     });
   };
@@ -64,7 +58,7 @@ const UsersPage = () => {
         username,
       },
       onCompleted: (data) => {
-        showMessage(data.deleteUser.message);
+        dispatch(AppSlice.actions.showMessage(data.deleteUser.message));
         loadUsers();
       },
     });
@@ -78,12 +72,6 @@ const UsersPage = () => {
   if (error) return <p>Error : {error.message}</p>;
   return (
     <div>
-      <Snackbar
-        open={showDialog}
-        autoHideDuration={2000}
-        onClose={() => setShowDialog(false)}
-        message={dialogText}
-      />
       <h1>Users</h1>
       <div className="header">
         <span className="spanBelowHeader">
@@ -157,7 +145,6 @@ const UsersPage = () => {
         open={open}
         handleClose={handleClose}
         loadUsers={loadUsers}
-        showMessage={showMessage}
       />
     </div>
   );

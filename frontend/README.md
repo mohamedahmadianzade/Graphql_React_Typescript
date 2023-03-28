@@ -8,7 +8,7 @@ Frontend Project of user management system
 - Tanstack library for data fetching and caching
 - Using .env for configuration variables
 - Apollo Graphql library for communication with graphql server
--
+- Using Redux for centeralized state management
 
 ### `npm start`
 

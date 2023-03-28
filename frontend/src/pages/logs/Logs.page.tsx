@@ -1,4 +1,4 @@
-import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import {
   TableContainer,
   Paper,
@@ -13,6 +13,8 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { deleteAllLogsQuery, getAllLogsQuery } from "./log.query";
 import "./log.css";
 import Button from "@mui/material/Button";
+import { useDispatch } from "react-redux/es/exports";
+import AppSlice from "../../state/slice/app.slice";
 
 const LogsPage = () => {
   const [loadLogs, { error, data }] = useLazyQuery(getAllLogsQuery, {
@@ -20,11 +22,13 @@ const LogsPage = () => {
   });
 
   const [deleteLogs] = useMutation(deleteAllLogsQuery);
+  const dispatch = useDispatch();
 
   const handleDeletAll = () => {
     deleteLogs({
       onCompleted: (data) => {
         loadLogs();
+        dispatch(AppSlice.actions.showMessage("All logs have been deleted"));
       },
     });
   };
