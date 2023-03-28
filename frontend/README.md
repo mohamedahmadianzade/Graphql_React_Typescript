@@ -1,14 +1,29 @@
-# Getting Started with Create React App
+# FrontEnd Project
 
 Frontend Project of user management system
 
 - Implemented in ReactJs
 - Typescript Implementation
+- Using Redux for centeralized state management
+- Apollo Graphql library for communication with graphql server
 - MaterialUI for UI
 - Tanstack library for data fetching and caching
 - Using .env for configuration variables
-- Apollo Graphql library for communication with graphql server
-- Using Redux for centeralized state management
+
+### Application features
+
+1- users
+
+    - Show all users
+    - Reload users from server
+    - clear all users
+    - show user count
+    - delete user
+
+2- logs
+
+    - show all logs
+    - clear all logs
 
 ### `npm start`
 

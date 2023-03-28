@@ -33,5 +33,6 @@ const info = await startStandaloneServer(server, {
     }
   }
 });
+
 console.log('Server started ' + JSON.stringify(info));
 console.log("------------------------------------------------");

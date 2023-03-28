@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Backend Project
 
 Backend Project of user management system
 
@@ -8,6 +8,14 @@ Backend Project of user management system
 - Using .env for configuration variables
 - MongoDB as database
 - Moongoos as Typeorm
+
+### Database architecture
+
+1- users
+
+2- logs
+
+3- config
 
 ### `npm start`
 

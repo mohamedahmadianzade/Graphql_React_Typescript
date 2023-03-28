@@ -11,12 +11,3 @@
   width: 35px;
   height: 35px;
 }
-
-.header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 10px;
-  align-items: center;
-  margin-bottom: 10px;
-}
